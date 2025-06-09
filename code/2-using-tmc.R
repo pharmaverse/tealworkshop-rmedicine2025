@@ -6,6 +6,7 @@ ADSL <- teal.modules.clinical::tmc_ex_adsl
 ADAE <- teal.modules.clinical::tmc_ex_adae
 ADTTE <- teal.modules.clinical::tmc_ex_adtte
 
+# Using cdisc_data()
 data <- cdisc_data(
   ADSL = ADSL,
   ADAE = ADAE,
@@ -13,10 +14,21 @@ data <- cdisc_data(
   code = "
       ADSL <- teal.modules.clinical::tmc_ex_adsl
       ADAE <- teal.modules.clinical::tmc_ex_adae
-      ADTTE <- teal.modules.clinical::tmc_ex_adtte
-    "
+      ADTTE2 <- teal.modules.clinical::tmc_ex_adtte
+  "
 )
 data <- verify(data)
+
+# using within(cdisc_data()), preferrable way
+data <- within(
+  cdisc_data(),
+  {
+    ADSL <- teal.modules.clinical::tmc_ex_adsl
+    ADAE <- teal.modules.clinical::tmc_ex_adae
+    ADTTE <- teal.modules.clinical::tmc_ex_adtte
+  }
+)
+join_keys(data) <- default_cdisc_join_keys[c("ADSL", "ADAE", "ADTTE")]
 
 app <- init(
   data = data,
