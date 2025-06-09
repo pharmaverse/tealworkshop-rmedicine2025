@@ -91,6 +91,6 @@ app <- init(
     ),
     count_type = "all"
   )
-) |> modify_header(element = tags$div(h3("My teal app")))
+)
 
 shinyApp(app$ui, app$server)
