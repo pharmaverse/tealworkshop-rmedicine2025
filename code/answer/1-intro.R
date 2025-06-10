@@ -1,26 +1,63 @@
+# * Create teal app
+# * use teal_data() to build data
+# * Run the app, click the Show R Code
+# * Verify the data object
+
 library(teal)
 
-data <- teal_data(
-  iris = iris,
-  code = "
-    iris <- iris
-  "
-)
+### Using teal_data() to create data object
+# data <- teal_data(
+#   iris = iris,
+#   mtcars = mtcars,
+#   code = "
+#     iris <- iris
+#     mtcars <- mtcars
+#   "
+# )
+# data <- verify(data)
 
-data <- cdisc_data(
-  ADSL = teal.data::rADSL,
-  code = "
+### the preferable way is to use within()
+### ?teal.code::within.qenv
+# data <- within(
+#   teal_data(),
+#   {
+#     iris <- iris
+#     mtcars <- mtcars
+#   }
+# )
+
+### Using cdisc_data() to create data object
+# data <- cdisc_data(
+#   ADSL = teal.data::rADSL,
+#   ADAE = teal.data::rADAE,
+#   code = "
+#     ADSL <- teal.data::rADSL
+#     ADAE <- teal.data::rADAE
+#   "
+# )
+# data <- verify(data)
+# join_keys(data)
+
+# preferable way is to use within()
+data <- within(
+  cdisc_data(),
+  {
     ADSL <- teal.data::rADSL
-  "
+    ADAE <- teal.data::rADAE
+  }
 )
+join_keys(data) <- default_cdisc_join_keys[c("ADSL", "ADAE")]
 
-data <- verify(data)
+# try teal.modules.general::tm_data_table
+
+library(teal.modules.general)
 
 app <- init(
   data = data,
   modules = modules(
-    example_module(label = "my module")
+    example_module(label = "my module"),
+    tm_data_table()
   )
-) |> modify_header(element = tags$div(h3("My teal app")))
+)
 
 shinyApp(app$ui, app$server)
