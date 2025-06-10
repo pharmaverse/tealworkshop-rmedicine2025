@@ -6,17 +6,18 @@
 library(teal)
 
 ### Using teal_data() to create data object
-data <- teal_data(
-  iris = iris,
-  mtcars = mtcars,
-  code = "
-    iris <- iris
-    mtcars <- mtcars
-  "
-)
-data <- verify(data)
+# data <- teal_data(
+#   iris = iris,
+#   mtcars = mtcars,
+#   code = "
+#     iris <- iris
+#     mtcars <- mtcars
+#   "
+# )
+# data <- verify(data)
 
 ### the preferable way is to use within()
+### ?teal.code::within.qenv
 # data <- within(
 #   teal_data(),
 #   {
@@ -26,14 +27,15 @@ data <- verify(data)
 # )
 
 ### Using cdisc_data() to create data object
-# data <- cdisc_data(
-#   ADSL = teal.data::rADSL,
-#   code = "
-#     ADSL <- teal.data::rADSL
-#   "
-# )
-# data <- verify(data)
-# join_keys(data)
+data <- cdisc_data(
+  ADSL = teal.data::rADSL,
+  code = "
+    ADSL <- teal.data::rADSL
+    ADAE <- teal.data::rADAE
+  "
+)
+data <- verify(data)
+join_keys(data)
 
 # preferable way is to use within()
 # data <- within(
