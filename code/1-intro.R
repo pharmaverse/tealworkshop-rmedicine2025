@@ -14,7 +14,7 @@ data <- teal_data(
 )
 # data <- verify(data)
 
-### the preferrable way is to use within()
+### the preferable way is to use within()
 # data <- within(
 #   teal_data(),
 #   {
@@ -32,7 +32,7 @@ data <- teal_data(
 # data <- verify(data)
 # join_keys(data)
 
-# preferrable way is to use within()
+# preferable way is to use within()
 # data <- within(
 #   cdisc_data(),
 #   {

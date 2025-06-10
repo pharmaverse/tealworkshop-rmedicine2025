@@ -14,12 +14,12 @@ data <- cdisc_data(
   code = "
       ADSL <- teal.modules.clinical::tmc_ex_adsl
       ADAE <- teal.modules.clinical::tmc_ex_adae
-      ADTTE2 <- teal.modules.clinical::tmc_ex_adtte
+      ADTTE <- teal.modules.clinical::tmc_ex_adtte
   "
 )
 data <- verify(data)
 
-# using within(cdisc_data()), preferrable way
+# using within(cdisc_data()), preferable way
 data <- within(
   cdisc_data(),
   {
@@ -91,6 +91,6 @@ app <- init(
     ),
     count_type = "all"
   )
-)
+) |> modify_header("My teal app")
 
 shinyApp(app$ui, app$server)
