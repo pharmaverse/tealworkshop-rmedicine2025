@@ -8,17 +8,20 @@ library(teal)
 ### Using teal_data() to create data object
 data <- teal_data(
   iris = iris,
+  mtcars = mtcars,
   code = "
     iris <- iris
+    mtcars <- mtcars
   "
 )
-# data <- verify(data)
+data <- verify(data)
 
 ### the preferable way is to use within()
 # data <- within(
 #   teal_data(),
 #   {
 #     iris <- iris
+#     mtcars <- mtcars
 #   }
 # )
 
