@@ -1,7 +1,9 @@
 # * Create teal app
+# * Look at init manual
 # * use teal_data() to build data
-# * Run the app, click the Show R Code
 # * Verify the data object
+# * Run the app, click the Show R Code
+# * Intro to filter argument
 
 library(teal)
 
@@ -18,13 +20,13 @@ library(teal)
 
 ### the preferable way is to use within()
 ### ?teal.code::within.qenv
-# data <- within(
-#   teal_data(),
-#   {
-#     iris <- iris
-#     mtcars <- mtcars
-#   }
-# )
+data <- within(
+  teal_data(),
+  {
+    iris <- iris
+    mtcars <- mtcars
+  }
+)
 
 ### Using cdisc_data() to create data object
 # data <- cdisc_data(
@@ -39,14 +41,14 @@ library(teal)
 # join_keys(data)
 
 # preferable way is to use within()
-data <- within(
-  cdisc_data(),
-  {
-    ADSL <- teal.data::rADSL
-    ADAE <- teal.data::rADAE
-  }
-)
-join_keys(data) <- default_cdisc_join_keys[c("ADSL", "ADAE")]
+# data <- within(
+#   cdisc_data(),
+#   {
+#     ADSL <- teal.data::rADSL
+#     ADAE <- teal.data::rADAE
+#   }
+# )
+# join_keys(data) <- default_cdisc_join_keys[c("ADSL", "ADAE")]
 
 # try teal.modules.general::tm_data_table
 
@@ -57,6 +59,15 @@ app <- init(
   modules = modules(
     example_module(label = "my module"),
     tm_data_table()
+  ),
+  filter = teal_slices(
+    teal_slice(
+      dataname = "iris",
+      varname = "Species",
+      selected = "virginica",
+      fixed = TRUE,
+      anchored = TRUE
+    )
   )
 )
 

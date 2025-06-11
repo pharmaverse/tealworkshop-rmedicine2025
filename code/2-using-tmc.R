@@ -20,15 +20,15 @@ data <- cdisc_data(
 data <- verify(data)
 
 # using within(cdisc_data()), preferable way
-data <- within(
-  cdisc_data(),
-  {
-    ADSL <- teal.modules.clinical::tmc_ex_adsl
-    ADAE <- teal.modules.clinical::tmc_ex_adae
-    ADTTE <- teal.modules.clinical::tmc_ex_adtte
-  }
-)
-join_keys(data) <- default_cdisc_join_keys[c("ADSL", "ADAE", "ADTTE")]
+# data <- within(
+#   cdisc_data(),
+#   {
+#     ADSL <- teal.modules.clinical::tmc_ex_adsl
+#     ADAE <- teal.modules.clinical::tmc_ex_adae
+#     ADTTE <- teal.modules.clinical::tmc_ex_adtte
+#   }
+# )
+# join_keys(data) <- default_cdisc_join_keys[c("ADSL", "ADAE", "ADTTE")]
 
 app <- init(
   data = data,
